@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { 
   Home, 
@@ -14,6 +14,7 @@ import {
 export function Navigation() {
   const { logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: Home },
@@ -28,6 +29,7 @@ export function Navigation() {
   const handleLogout = async () => {
     try {
       await logout();
+      navigate('/login');
     } catch (error) {
       console.error('Failed to log out:', error);
     }
