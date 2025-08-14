@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "web": "vite",
+    "web": "vite --host",
     "server": "node server/index.mjs",
-    "dev": "concurrently -k \"vite\" \"node server/index.mjs\"",
+    "dev": "concurrently -k \"npm run web\" \"node server/index.mjs\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
