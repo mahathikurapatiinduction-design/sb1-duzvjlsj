@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Droplets, Mail, Lock, AlertCircle, CheckCircle } from 'lucide-react';
+import { db, auth } from '../firebase/config';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 export function Signup() {
   const [email, setEmail] = useState('');
@@ -29,6 +31,14 @@ export function Signup() {
       setError('');
       setLoading(true);
       await signup(email, password);
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, 'users', user.uid), {
+          uid: user.uid,
+          email: user.email,
+          createdAt: serverTimestamp()
+        }, { merge: true });
+      }
       navigate('/dashboard');
     } catch (error) {
       setError('Failed to create account. Please try again.');
