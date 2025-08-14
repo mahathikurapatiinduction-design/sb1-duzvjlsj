@@ -3,14 +3,21 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+function useEnvOr(defaultValue: string, envValue: string | undefined) {
+  if (!envValue) return defaultValue;
+  const v = envValue.trim();
+  if (v === '' || v.includes('your-project') || v.includes('...')) return defaultValue;
+  return v;
+}
+
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB1Rk0Iooq72VYnvlt3mwuMhpWgVfGh3gI",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "water-project-d220c.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "water-project-d220c",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "water-project-d220c.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "761899371073",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:761899371073:web:023dd5b1b96f20b97414c0",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-PMS833JN1V"
+  apiKey: useEnvOr("AIzaSyB1Rk0Iooq72VYnvlt3mwuMhpWgVfGh3gI", import.meta.env.VITE_FIREBASE_API_KEY),
+  authDomain: useEnvOr("water-project-d220c.firebaseapp.com", import.meta.env.VITE_FIREBASE_AUTH_DOMAIN),
+  projectId: useEnvOr("water-project-d220c", import.meta.env.VITE_FIREBASE_PROJECT_ID),
+  storageBucket: useEnvOr("water-project-d220c.firebasestorage.app", import.meta.env.VITE_FIREBASE_STORAGE_BUCKET),
+  messagingSenderId: useEnvOr("761899371073", import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID),
+  appId: useEnvOr("1:761899371073:web:023dd5b1b96f20b97414c0", import.meta.env.VITE_FIREBASE_APP_ID),
+  measurementId: useEnvOr("G-PMS833JN1V", import.meta.env.VITE_FIREBASE_MEASUREMENT_ID)
 };
 
 const app = initializeApp(firebaseConfig);

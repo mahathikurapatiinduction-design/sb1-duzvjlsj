@@ -13,6 +13,7 @@ import { DataInput } from './pages/DataInput';
 import { Goals } from './pages/Goals';
 import { Leaderboard } from './pages/Leaderboard';
 import { CommunityTips } from './pages/CommunityTips';
+import { Chat } from './pages/Chat';
 
 function App() {
   return (
@@ -70,6 +71,16 @@ function App() {
                 <Navigation />
                 <main className="flex-1">
                   <CommunityTips />
+                </main>
+                <Footer />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/chat" element={
+              <ProtectedRoute>
+                <Navigation />
+                <main className="flex-1">
+                  <Chat />
                 </main>
                 <Footer />
               </ProtectedRoute>
